@@ -44,6 +44,17 @@ std::vector<RandomizerCheck> Rando::StaticData::GetOverworldPotLocations() {
     return overworldPotLocations;
 }
 
+std::vector<RandomizerCheck> Rando::StaticData::GetTreeLocations() {
+    std::vector<RandomizerCheck> treeLocations = {};
+    for (Location& location : locationTable) {
+        if (location.GetRCType() == RCTYPE_TREE && location.IsOverworld() &&
+            location.GetRandomizerCheck() != RC_UNKNOWN_CHECK) {
+            treeLocations.push_back(location.GetRandomizerCheck());
+        }
+    }
+    return treeLocations;
+}
+
 std::vector<RandomizerCheck> Rando::StaticData::GetStaticHintLocations() {
     std::vector<RandomizerCheck> staticHintLocations = {};
     for (Location& location : locationTable) {
@@ -116,6 +127,7 @@ std::vector<RandomizerCheck> Rando::StaticData::GetOverworldLocations() {
             location.GetRandomizerCheck() != RC_TRIFORCE_COMPLETED && //not really an overworld check
             location.GetRCType() != RCTYPE_FISH && // temp fix while locations are properly sorted out
             location.GetRCType() != RCTYPE_POT &&  // Same as fish
+            location.GetRCType() != RCTYPE_TREE &&  // Same as pot  
             location.GetRCType() != RCTYPE_CHEST_GAME && //this is supposed to be excluded
             (ctx->GetOption(RSK_SHUFFLE_ADULT_TRADE) || location.GetRCType() != RCTYPE_ADULT_TRADE) && //trade is handled elsewhere in location pool
             location.GetRCType() != RCTYPE_STATIC_HINT && 
@@ -1599,7 +1611,16 @@ void Rando::StaticData::InitLocationTable() { //                                
     locationTable[RC_GERUDO_TRAINING_GROUND_MQ_LOBBY_RIGHT_POT_1]   = Location::Pot(RC_GERUDO_TRAINING_GROUND_MQ_LOBBY_RIGHT_POT_1,     RCQUEST_MQ, RCAREA_GERUDO_TRAINING_GROUND,	SCENE_GERUDO_TRAINING_GROUND,   TWO_ACTOR_PARAMS(199, -79),     "MQ Lobby Right Pot 1",         "Gerudo Training Ground MQ Lobby Right Pot 1",     RHT_POT_GERUDO_TRAINING_GROUND,    RG_GREEN_RUPEE,     SpoilerCollectionCheck::RandomizerInf(RAND_INF_GERUDO_TRAINING_GROUND_MQ_LOBBY_RIGHT_POT_1));
     locationTable[RC_GERUDO_TRAINING_GROUND_MQ_LOBBY_RIGHT_POT_2]   = Location::Pot(RC_GERUDO_TRAINING_GROUND_MQ_LOBBY_RIGHT_POT_2,     RCQUEST_MQ, RCAREA_GERUDO_TRAINING_GROUND,	SCENE_GERUDO_TRAINING_GROUND,   TWO_ACTOR_PARAMS(197, -179),    "MQ Lobby Right Pot 2",         "Gerudo Training Ground MQ Lobby Right Pot 2",     RHT_POT_GERUDO_TRAINING_GROUND,    RG_MAGIC_DOUBLE,    SpoilerCollectionCheck::RandomizerInf(RAND_INF_GERUDO_TRAINING_GROUND_MQ_LOBBY_RIGHT_POT_2));
 
-
+    // Trees
+    //            Randomizer Check                              Randomizer Check                                         Quest         Area                          Scene ID                           Params                               Short Name                    	   Spoiler Name                                Hint Text Key                     Vanilla             Spoiler Collection Check
+    locationTable[RC_HF_NEAR_KAK_TREE]                    	    =	Location::Tree(RC_HF_NEAR_KAK_TREE,                  RCQUEST_BOTH, RCAREA_HYRULE_FIELD,          SCENE_HYRULE_FIELD,                TWO_ACTOR_PARAMS(3276, 971),     "Tree Outside Kakariko",          "HF Tree Near Kakariko",                   RHT_TREE_HYRULE_FIELD,	             RG_GREEN_RUPEE,  SpoilerCollectionCheck::RandomizerInf(RAND_INF_NEAR_KAK_TREE));
+    locationTable[RC_HF_SOUTH_TREE]                    	        =	Location::Tree(RC_HF_SOUTH_TREE,                     RCQUEST_BOTH, RCAREA_HYRULE_FIELD,          SCENE_HYRULE_FIELD,                TWO_ACTOR_PARAMS(-786, 11293),   "Tree in south Hyrule Field",     "HF Tree South",                           RHT_TREE_HYRULE_FIELD,	             RG_GREEN_RUPEE,  SpoilerCollectionCheck::RandomizerInf(RAND_INF_SOUTH_HF_TREE));
+    locationTable[RC_HF_NEAR_LLR_TREE]                    	    =	Location::Tree(RC_HF_NEAR_LLR_TREE,                  RCQUEST_BOTH, RCAREA_HYRULE_FIELD,          SCENE_HYRULE_FIELD,                TWO_ACTOR_PARAMS(-1907, 5409),   "Tree outside Lon Lon Ranch",     "HF Tree Outside LLR",                     RHT_TREE_HYRULE_FIELD,	             RG_GREEN_RUPEE,  SpoilerCollectionCheck::RandomizerInf(RAND_INF_NEAR_LLR_TREE));
+    locationTable[RC_HF_NEAR_LH_TREE]                    	    =	Location::Tree(RC_HF_NEAR_LH_TREE,                   RCQUEST_BOTH, RCAREA_HYRULE_FIELD,          SCENE_HYRULE_FIELD,                TWO_ACTOR_PARAMS(-4377, 13662),  "Tree outside Lake Hylia",        "HF Tree Outside LH",                      RHT_TREE_HYRULE_FIELD,	             RG_GREEN_RUPEE,  SpoilerCollectionCheck::RandomizerInf(RAND_INF_NEAR_LH_TREE));
+    locationTable[RC_HF_NEAR_GV_TREE]                    	    =	Location::Tree(RC_HF_NEAR_GV_TREE,                   RCQUEST_BOTH, RCAREA_HYRULE_FIELD,          SCENE_HYRULE_FIELD,                TWO_ACTOR_PARAMS(-6270, 8579),   "Tree outside Gerudo Valley",     "HF Tree Outside GV",                      RHT_TREE_HYRULE_FIELD,	             RG_GREEN_RUPEE,  SpoilerCollectionCheck::RandomizerInf(RAND_INF_NEAR_GV_TREE));
+    locationTable[RC_HF_NEAR_ZR_TREE]                    	    =	Location::Tree(RC_HF_NEAR_ZR_TREE,                   RCQUEST_BOTH, RCAREA_HYRULE_FIELD,          SCENE_HYRULE_FIELD,                TWO_ACTOR_PARAMS(3117, 4239),    "Tree outside Zora's River",      "HF Tree Outside ZR",                      RHT_TREE_HYRULE_FIELD,	             RG_GREEN_RUPEE,  SpoilerCollectionCheck::RandomizerInf(RAND_INF_NEAR_ZR_TREE));
+    locationTable[RC_HF_NEAR_KAK_S_TREE]                    	=	Location::Tree(RC_HF_NEAR_KAK_S_TREE,                RCQUEST_BOTH, RCAREA_HYRULE_FIELD,          SCENE_HYRULE_FIELD,                TWO_ACTOR_PARAMS(2076, -91),     "Small Tree Outside Kakariko",    "HF Small Tree Near Kakariko",             RHT_TREE_HYRULE_FIELD,	             RG_GREEN_RUPEE,  SpoilerCollectionCheck::RandomizerInf(RAND_INF_NEAR_KAK_S_TREE));
+    locationTable[RC_MARKET_TREE]                    	        =	Location::Tree(RC_MARKET_TREE,                       RCQUEST_BOTH, RCAREA_MARKET,                SCENE_MARKET_DAY,                  TWO_ACTOR_PARAMS(-100, 240),     "Tree in Hyrule Market",          "Market Tree",                             RHT_TREE_MARKET,	                     RG_GREEN_RUPEE,  SpoilerCollectionCheck::RandomizerInf(RAND_INF_MARKET_TREE));
     // Gossip Stones
     locationTable[RC_DMC_GOSSIP_STONE] =                                          Location::HintStone(RC_DMC_GOSSIP_STONE,                                             RCQUEST_BOTH,                                                                                                   SCENE_DEATH_MOUNTAIN_CRATER,        14341,                              "Gossip Stone");
     locationTable[RC_DMT_GOSSIP_STONE] =                                          Location::HintStone(RC_DMT_GOSSIP_STONE,                                             RCQUEST_BOTH,                                                                                                   SCENE_DEATH_MOUNTAIN_TRAIL,         14340,                              "Gossip Stone");

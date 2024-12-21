@@ -264,6 +264,7 @@ typedef enum {
     RCTYPE_SONG_LOCATION,              // Song locations
     RCTYPE_BOSS_HEART_OR_OTHER_REWARD, // Boss heart container or lesser dungeon rewards (lens, ice arrow)
     RCTYPE_POT,                        // Pots
+    RCTYPE_TREE,                       // Trees
     RCTYPE_DUNGEON_REWARD,             // Dungeon rewards (blue warps)
     RCTYPE_OCARINA,                    // Ocarina locations
     RCTYPE_BEEHIVE,                    // Beehives
@@ -2296,6 +2297,18 @@ typedef enum {
     RC_GANONS_CASTLE_MQ_SPIRIT_TRIAL_POT_1,
     RC_GANONS_CASTLE_MQ_SPIRIT_TRIAL_POT_2,
     // End Pots
+
+    // Start Trees
+    RC_HF_NEAR_KAK_TREE,
+    RC_HF_SOUTH_TREE,
+    RC_HF_NEAR_LLR_TREE,
+    RC_HF_NEAR_LH_TREE,
+    RC_HF_NEAR_GV_TREE,
+    RC_HF_NEAR_ZR_TREE,
+    RC_HF_NEAR_KAK_S_TREE,
+    RC_MARKET_TREE,
+
+    // End Trees
 
     RC_PIERRE,
     RC_DELIVER_RUTOS_LETTER,
@@ -4416,6 +4429,9 @@ typedef enum {
     RHT_POT_GANONS_CASTLE,
     RHT_POT_BOTTOM_OF_THE_WELL,
     RHT_POT_ICE_CAVERN,
+    // Shuffle Trees
+    RHT_TREE_HYRULE_FIELD,
+    RHT_TREE_MARKET,
     // Ganon Line
     RHT_GANON_JOKE01,
     RHT_GANON_JOKE02,
@@ -4591,6 +4607,7 @@ typedef enum {
     RSK_SHUFFLE_WEIRD_EGG,
     RSK_SHUFFLE_GERUDO_MEMBERSHIP_CARD,
     RSK_SHUFFLE_POTS,
+    RSK_SHUFFLE_TREES,
     RSK_SHUFFLE_FROG_SONG_RUPEES,
     RSK_ITEM_POOL,
     RSK_ICE_TRAPS,
@@ -5060,6 +5077,12 @@ typedef enum {
     RO_SHUFFLE_POTS_ALL,
 } RandoOptionShufflePots;
 
+// Shuffle Tree settings (off, on)
+typedef enum {
+    RO_SHUFFLE_TREES_OFF,
+    RO_SHUFFLE_TREES_ON,
+} RandoOptionShuffleTrees;
+
 //Link's Pocket Settings (dungeon reward, advancement, anything, nothing)
 typedef enum {
     RO_LINKS_POCKET_DUNGEON_REWARD,
@@ -5150,6 +5173,11 @@ typedef struct PotIdentity {
     RandomizerInf randomizerInf;
     RandomizerCheck randomizerCheck;
 } PotIdentity;
+
+typedef struct TreeIdentity {
+    RandomizerInf randomizerInf;
+    RandomizerCheck randomizerCheck;
+} TreeIdentity;
 
 typedef struct FishIdentity {
     RandomizerInf randomizerInf;

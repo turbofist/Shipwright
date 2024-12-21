@@ -56,6 +56,7 @@ bool showWeirdEgg;
 bool showGerudoCard;
 bool showOverworldPots;
 bool showDungeonPots;
+bool showTrees;
 bool showFrogSongRupees;
 bool showStartingMapsCompasses;
 bool showKeysanity;
@@ -1226,11 +1227,21 @@ void LoadSettings() {
                 showDungeonPots = false;
                 break;
         }
+
+        switch (OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_TREES)) {
+            case RO_SHUFFLE_TREES_ON:
+                showTrees = true;
+                break;
+            default:
+                showTrees = false;
+                break;
+        }
     } else { // Vanilla
         showOverworldTokens = true;
         showDungeonTokens = true;
         showOverworldPots = false;
         showDungeonPots = false;
+        showTrees = false;
     }
 
     fortressFast = false;
@@ -1290,6 +1301,7 @@ bool IsCheckShuffled(RandomizerCheck rc) {
             (loc->GetRCType() != RCTYPE_POT ||
                 (showOverworldPots && RandomizerCheckObjects::AreaIsOverworld(loc->GetArea())) ||
                 (showDungeonPots && RandomizerCheckObjects::AreaIsDungeon(loc->GetArea()))) &&
+            (loc->GetRCType() != RCTYPE_TREE || showTrees) &&
             (loc->GetRCType() != RCTYPE_COW || showCows) &&
             (loc->GetRCType() != RCTYPE_FISH || OTRGlobals::Instance->gRandoContext->GetFishsanity()->GetFishLocationIncluded(loc)) &&
             (loc->GetRCType() != RCTYPE_ADULT_TRADE ||

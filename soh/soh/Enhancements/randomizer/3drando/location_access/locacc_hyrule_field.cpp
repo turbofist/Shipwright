@@ -9,8 +9,15 @@ void RegionTable_Init_HyruleField() {
                   EventAccess(&logic->BigPoeKill, {[]{return logic->CanUse(RG_FAIRY_BOW) && logic->CanUse(RG_EPONA) && logic->HasBottle();}}),
                 }, {
                   //Locations
-                  LOCATION(RC_HF_OCARINA_OF_TIME_ITEM,   logic->IsChild && logic->StoneCount() == 3),
-                  LOCATION(RC_SONG_FROM_OCARINA_OF_TIME, logic->IsChild && logic->StoneCount() == 3),
+            LOCATION(RC_HF_OCARINA_OF_TIME_ITEM, logic->IsChild && logic->StoneCount() == 3),
+            LOCATION(RC_SONG_FROM_OCARINA_OF_TIME, logic->IsChild && logic->StoneCount() == 3),
+            LOCATION(RC_HF_NEAR_KAK_TREE, logic->CanBonkTrees()),
+            LOCATION(RC_HF_SOUTH_TREE, logic->CanBonkTrees()),
+            LOCATION(RC_HF_NEAR_LLR_TREE, logic->CanBonkTrees()),
+            LOCATION(RC_HF_NEAR_LH_TREE, logic->CanBonkTrees()),
+            LOCATION(RC_HF_NEAR_GV_TREE, logic->CanBonkTrees()),
+            LOCATION(RC_HF_NEAR_ZR_TREE, logic->CanBonkTrees()),
+            LOCATION(RC_HF_NEAR_KAK_S_TREE, logic->CanBonkTrees()),
                 }, {
                   //Exits
                   Entrance(RR_LW_BRIDGE,              {[]{return true;}}),

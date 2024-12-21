@@ -83,8 +83,9 @@ RandomizerArea ItemLocation::GetFirstArea() const {
 
 RandomizerArea ItemLocation::GetRandomArea() const {
     if (areas.empty()){
-        SPDLOG_DEBUG("Attempted to get random area of location with no areas: ");
+        SPDLOG_DEBUG("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Attempted to get random area of location with no areas:");
         SPDLOG_DEBUG(Rando::StaticData::GetLocation(rc)->GetName());
+        SPDLOG_DEBUG("-------------------------------------------------------: \n\n\n\n\n\n\n\n\n");
         assert(false);
         return RA_NONE;
     } else {

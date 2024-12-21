@@ -8,6 +8,7 @@
 #include "soh/Enhancements/randomizer/dungeon.h"
 #include "soh/Enhancements/randomizer/fishsanity.h"
 #include "soh/Enhancements/randomizer/ShufflePots.h"
+#include "soh/Enhancements/randomizer/ShuffleTrees.h"
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
 #include "soh/ImGuiUtils.h"
@@ -2326,6 +2327,10 @@ void RandomizerRegisterHooks() {
     static uint32_t shufflePotsOnActorInitHook = 0;
     static uint32_t shufflePotsOnVanillaBehaviorHook = 0;
 
+    static uint32_t shuffleTreesOnActorInitHook = 0;
+    static uint32_t shuffleTreesOnVanillaBehaviorHook = 0;
+
+
     GameInteractor::Instance->RegisterGameHook<GameInteractor::OnLoadGame>([](int32_t fileNum) {
         randomizerQueuedChecks = std::queue<RandomizerCheck>();
         randomizerQueuedCheck = RC_UNKNOWN_CHECK;
@@ -2353,9 +2358,12 @@ void RandomizerRegisterHooks() {
         GameInteractor::Instance->UnregisterGameHook<GameInteractor::OnSceneInit>(fishsanityOnSceneInitHook);
         GameInteractor::Instance->UnregisterGameHook<GameInteractor::OnVanillaBehavior>(fishsanityOnVanillaBehaviorHook);
         GameInteractor::Instance->UnregisterGameHook<GameInteractor::OnItemReceive>(fishsanityOnItemReceiveHook);
-
+        
         GameInteractor::Instance->UnregisterGameHook<GameInteractor::OnActorInit>(shufflePotsOnActorInitHook);
         GameInteractor::Instance->UnregisterGameHook<GameInteractor::OnVanillaBehavior>(shufflePotsOnVanillaBehaviorHook);
+
+        GameInteractor::Instance->UnregisterGameHook<GameInteractor::OnActorInit>(shuffleTreesOnActorInitHook);
+        GameInteractor::Instance->UnregisterGameHook<GameInteractor::OnVanillaBehavior>(shuffleTreesOnVanillaBehaviorHook);
 
         onFlagSetHook = 0;
         onSceneFlagSetHook = 0;
@@ -2382,6 +2390,9 @@ void RandomizerRegisterHooks() {
 
         shufflePotsOnActorInitHook = 0;
         shufflePotsOnVanillaBehaviorHook = 0;
+
+        shuffleTreesOnActorInitHook = 0;
+        shuffleTreesOnVanillaBehaviorHook = 0;
 
         if (!IS_RANDO) return;
 
@@ -2424,6 +2435,14 @@ void RandomizerRegisterHooks() {
         if (RAND_GET_OPTION(RSK_SHUFFLE_POTS) != RO_SHUFFLE_POTS_OFF) {
             shufflePotsOnActorInitHook = GameInteractor::Instance->RegisterGameHook<GameInteractor::OnActorInit>(ObjTsubo_RandomizerInit);
             shufflePotsOnVanillaBehaviorHook = GameInteractor::Instance->RegisterGameHook<GameInteractor::OnVanillaBehavior>(ShufflePots_OnVanillaBehaviorHandler);
+        }
+
+        if (RAND_GET_OPTION(RSK_SHUFFLE_TREES) != RO_SHUFFLE_TREES_OFF) {
+            shuffleTreesOnActorInitHook =
+                GameInteractor::Instance->RegisterGameHook<GameInteractor::OnActorInit>(EnWood02_RandomizerInit);
+            shuffleTreesOnVanillaBehaviorHook =
+                GameInteractor::Instance->RegisterGameHook<GameInteractor::OnVanillaBehavior>(
+                    ShuffleTrees_OnVanillaBehaviorHandler);
         }
     });
 }

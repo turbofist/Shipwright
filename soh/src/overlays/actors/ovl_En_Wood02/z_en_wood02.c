@@ -6,6 +6,7 @@
 
 #include "z_en_wood02.h"
 #include "objects/object_wood02/object_wood02.h"
+#include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
 
 #define FLAGS 0
 
@@ -361,12 +362,15 @@ void EnWood02_Update(Actor* thisx, PlayState* play2) {
             if ((this->unk_14C >= 0) && (this->unk_14C < 0x64) && (CVarGetInteger(CVAR_ENHANCEMENT("TreesDropSticks"), 0)) && !(INV_CONTENT(ITEM_STICK) == ITEM_NONE)) {
                 (numDrops = (Rand_ZeroOne() * 4));
                 for (i = 0; i < numDrops; ++i) {
+                    LUSLOG_DEBUG("Tree bonked 1");
                     Item_DropCollectible(play, &dropsSpawnPt, ITEM00_STICK);
                 }
             } else {
-                if ((this->unk_14C >= 0) && (this->unk_14C < 0x64)) {
-                Item_DropCollectibleRandom(play, &this->actor, &dropsSpawnPt, this->unk_14C << 4);
+                LUSLOG_DEBUG("Tree bonked 2");
+                if (GameInteractor_Should(VB_TREE_DROP_ITEM, (this->unk_14C >= 0) && (this->unk_14C < 0x64), this)) {
+                    Item_DropCollectibleRandom(play, &this->actor, &dropsSpawnPt, this->unk_14C << 4);
             } else {
+                LUSLOG_DEBUG("Tree bonked 3");
                 if (this->actor.home.rot.z != 0) {
                     this->actor.home.rot.z &= 0x1FFF;
                     this->actor.home.rot.z |= 0xE000;

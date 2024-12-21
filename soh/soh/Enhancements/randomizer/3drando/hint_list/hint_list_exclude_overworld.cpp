@@ -1542,5 +1542,13 @@ void StaticData::HintTable_Init_Exclude_Overworld() {
     hintTextTable[RHT_POT_HYRULE_CASTLE] = HintText(CustomMessage("They say that a #pot in Hyrule Castle# contains #[[1]]#.",
                                                        /*german*/ "",
                                                        /*french*/ "", {QM_RED, QM_GREEN}));
+    hintTextTable[RHT_TREE_HYRULE_FIELD] =
+        HintText(CustomMessage("They say that a #tree in Hyrule Field# contains #[[1]]#.",
+                               /*german*/ "",
+                               /*french*/ "", { QM_RED, QM_GREEN }));
+    hintTextTable[RHT_TREE_MARKET] =
+        HintText(CustomMessage("They say that a #tree in Hyrule Market# contains #[[1]]#.",
+                               /*german*/ "",
+                               /*french*/ "", { QM_RED, QM_GREEN }));
 }
 }

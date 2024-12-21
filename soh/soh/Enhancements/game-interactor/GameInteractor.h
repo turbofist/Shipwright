@@ -249,6 +249,9 @@ typedef enum {
     // Opt: *ObjTsubo
     VB_POT_SETUP_DRAW,
     VB_POT_DROP_ITEM,
+    // Opt: *EnWood02
+    VB_TREE_SETUP_DRAW,
+    VB_TREE_DROP_ITEM,
     // Opt: *ActorDoorShutter
     VB_LOCK_BOSS_DOOR,
     // Vanilla condition: true

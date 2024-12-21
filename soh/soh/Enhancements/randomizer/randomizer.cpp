@@ -1551,6 +1551,15 @@ std::map<RandomizerCheck, RandomizerInf> rcToRandomizerInf = {
     { RC_GERUDO_TRAINING_GROUND_MQ_LOBBY_LEFT_POT_2,                   RAND_INF_GERUDO_TRAINING_GROUND_MQ_LOBBY_LEFT_POT_2 },
     { RC_GERUDO_TRAINING_GROUND_MQ_LOBBY_RIGHT_POT_1,                  RAND_INF_GERUDO_TRAINING_GROUND_MQ_LOBBY_RIGHT_POT_1 },
     { RC_GERUDO_TRAINING_GROUND_MQ_LOBBY_RIGHT_POT_2,                  RAND_INF_GERUDO_TRAINING_GROUND_MQ_LOBBY_RIGHT_POT_2 },
+
+    { RC_HF_NEAR_KAK_TREE,                                              RAND_INF_NEAR_KAK_TREE },
+    { RC_HF_SOUTH_TREE,                                                 RAND_INF_SOUTH_HF_TREE },
+    { RC_HF_NEAR_LLR_TREE,                                              RAND_INF_NEAR_LLR_TREE },
+    { RC_HF_NEAR_LH_TREE,                                               RAND_INF_NEAR_LH_TREE },
+    { RC_HF_NEAR_GV_TREE,                                               RAND_INF_NEAR_GV_TREE },
+    { RC_HF_NEAR_ZR_TREE,                                               RAND_INF_NEAR_ZR_TREE },
+    { RC_HF_NEAR_KAK_S_TREE,                                            RAND_INF_NEAR_KAK_S_TREE },
+    { RC_MARKET_TREE,                                                   RAND_INF_MARKET_TREE }
 };
 
 BeehiveIdentity Randomizer::IdentifyBeehive(s32 sceneNum, s16 xPosition, s32 respawnData) {
@@ -1576,6 +1585,7 @@ BeehiveIdentity Randomizer::IdentifyBeehive(s32 sceneNum, s16 xPosition, s32 res
 }
 
 Rando::Location* Randomizer::GetCheckObjectFromActor(s16 actorId, s16 sceneNum, s32 actorParams = 0x00) {
+    //LUSLOG_DEBUG("GetCheckObjectFromActor: actorId = %d, sceneNum = %d, actorParams = %x", actorId, sceneNum, actorParams);
     auto fs = OTRGlobals::Instance->gRandoContext->GetFishsanity();
     RandomizerCheck specialRc = RC_UNKNOWN_CHECK;
     // TODO: Migrate these special cases into table, or at least document why they are special
@@ -1816,6 +1826,32 @@ PotIdentity Randomizer::IdentifyPot(s32 sceneNum, s32 posX, s32 posZ) {
     }
 
     return potIdentity;
+}
+
+TreeIdentity Randomizer::IdentifyTree(s32 sceneNum, s32 posX, s32 posZ) {
+    struct TreeIdentity treeIdentity;
+    uint32_t treeSceneNum = sceneNum;
+
+    LUSLOG_DEBUG("Rando location: (%d)", );
+
+    treeIdentity.randomizerInf = RAND_INF_MAX;
+    treeIdentity.randomizerCheck = RC_UNKNOWN_CHECK;
+
+    s32 actorParams = TWO_ACTOR_PARAMS(posX, posZ);
+
+    Rando::Location* location = GetCheckObjectFromActor(ACTOR_EN_WOOD02, treeSceneNum, actorParams);
+
+    LUSLOG_DEBUG("Rando location: (%d)", location->GetRandomizerCheck());
+
+    if (location->GetRandomizerCheck() == RC_UNKNOWN_CHECK) {
+        LUSLOG_WARN("IdentifyTree did not receive a valid RC value (%d).", location->GetRandomizerCheck());
+        assert(false);
+    } else {
+        treeIdentity.randomizerInf = rcToRandomizerInf[location->GetRandomizerCheck()];
+        treeIdentity.randomizerCheck = location->GetRandomizerCheck();
+    }
+
+    return treeIdentity;
 }
 
 FishIdentity Randomizer::IdentifyFish(s32 sceneNum, s32 actorParams) {
