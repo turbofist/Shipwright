@@ -1559,7 +1559,16 @@ std::map<RandomizerCheck, RandomizerInf> rcToRandomizerInf = {
     { RC_HF_NEAR_GV_TREE,                                               RAND_INF_NEAR_GV_TREE },
     { RC_HF_NEAR_ZR_TREE,                                               RAND_INF_NEAR_ZR_TREE },
     { RC_HF_NEAR_KAK_S_TREE,                                            RAND_INF_NEAR_KAK_S_TREE },
-    { RC_MARKET_TREE,                                                   RAND_INF_MARKET_TREE }
+    { RC_MARKET_TREE,                                                   RAND_INF_MARKET_TREE },
+    //CUSTOM ADD HERE
+    { RC_ZF_TREE, RAND_INF_ZF_TREE },
+    { RC_ZR_TREE, RAND_INF_ZR_TREE },
+    { RC_KAK_TREE, RAND_INF_KAK_TREE },
+    { RC_LLR_TREE, RAND_INF_LLR_TREE },
+    { RC_HF_ADULT_NEAR_GV_TREE, RAND_INF_HF_ADULT_NEAR_GV_TREE },
+    { RC_HC_SKULLTULA_TREE, RAND_INF_HC_SKULLTULA_TREE },
+    { RC_HC_NEAR_GUARDS_TREE, RAND_INF_HC_NEAR_GUARDS_TREE },
+    { RC_HC_GROTTO_TREE, RAND_INF_HC_GROTTO_TREE },
 };
 
 BeehiveIdentity Randomizer::IdentifyBeehive(s32 sceneNum, s16 xPosition, s32 respawnData) {
@@ -1834,6 +1843,7 @@ TreeIdentity Randomizer::IdentifyTree(s32 sceneNum, s32 posX, s32 posZ) {
 
     LUSLOG_DEBUG("Rando location: (%d)", );
 
+
     treeIdentity.randomizerInf = RAND_INF_MAX;
     treeIdentity.randomizerCheck = RC_UNKNOWN_CHECK;
 
@@ -1844,6 +1854,7 @@ TreeIdentity Randomizer::IdentifyTree(s32 sceneNum, s32 posX, s32 posZ) {
     LUSLOG_DEBUG("Rando location: (%d)", location->GetRandomizerCheck());
 
     if (location->GetRandomizerCheck() == RC_UNKNOWN_CHECK) {
+        LUSLOG_DEBUG("Tree fitting criteria at X: %d Z: %d", posX, posZ);
         LUSLOG_WARN("IdentifyTree did not receive a valid RC value (%d).", location->GetRandomizerCheck());
         assert(false);
     } else {

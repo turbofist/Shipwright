@@ -30,6 +30,7 @@ void RegionTable_Init_Kakariko() {
                   LOCATION(RC_KAK_NEAR_GUARDS_HOUSE_POT_3,     logic->IsChild && logic->CanBreakPots()),
                   LOCATION(RC_KAK_NEAR_MEDICINE_SHOP_POT_1,    logic->IsChild && logic->CanBreakPots()),
                   LOCATION(RC_KAK_NEAR_MEDICINE_SHOP_POT_2,    logic->IsChild && logic->CanBreakPots()),
+                  LOCATION(RC_KAK_TREE, logic->IsChild && logic->CanBonkTrees()),
                 }, {
                   //Exits
                   Entrance(RR_HYRULE_FIELD,                {[]{return true;}}),

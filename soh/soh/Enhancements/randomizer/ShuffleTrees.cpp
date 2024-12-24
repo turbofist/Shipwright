@@ -1,5 +1,6 @@
 #include "ShuffleTrees.h"
 #include "soh_assets.h"
+#include "assets/objects/object_wood02/object_wood02.h"
 
 extern "C" {
 #include "variables.h"
@@ -7,19 +8,47 @@ extern "C" {
 extern PlayState* gPlayState;
 }
 
+static Gfx* D_80B3BF54[] = {
+    (Gfx*)object_wood02_DL_0078D0, (Gfx*)object_wood02_DL_007CA0, (Gfx*)object_wood02_DL_0080D0,
+    (Gfx*)object_wood02_DL_000090, (Gfx*)object_wood02_DL_000340, (Gfx*)object_wood02_DL_000340,
+    (Gfx*)object_wood02_DL_000700,
+};
+
+static Gfx* D_80B3BF70[] = {
+    (Gfx*)object_wood02_DL_007968,
+    (Gfx*)object_wood02_DL_007D38,
+    (Gfx*)object_wood02_DL_0081A8,
+    NULL,
+    NULL,
+    NULL,
+    (Gfx*)object_wood02_DL_007AD0,
+    (Gfx*)object_wood02_DL_007E20,
+    (Gfx*)object_wood02_DL_008350,
+    (Gfx*)object_wood02_DL_000160,
+    (Gfx*)object_wood02_DL_000440,
+    (Gfx*)object_wood02_DL_000700,
+};
+
 extern void EnItem00_DrawRandomizedItem(EnItem00* enItem00, PlayState* play);
 
 extern "C" void EnWood02_RandomizerDraw(Actor* thisx, PlayState* play) {
+    EnWood02* thisy = (EnWood02*)thisx;
     float treeSize = 1.0f;
 
     OPEN_DISPS(play->state.gfxCtx);
-    Gfx_SetupDL_25Opa(play->state.gfxCtx);
-    Matrix_Scale(treeSize, treeSize, treeSize, MTXMODE_APPLY);
-    gSPMatrix(POLY_OPA_DISP++, Matrix_NewMtx(play->state.gfxCtx, (char*)__FILE__, __LINE__),
-        G_MTX_MODELVIEW | G_MTX_LOAD);
-
-    //TODO: Change this to a tree DL.
-    gSPDisplayList(POLY_OPA_DISP++, (Gfx*)gRandoPotDL);
+    Gfx_SetupDL_25Xlu(play->state.gfxCtx);
+    if ((thisy->actor.params == WOOD_LEAF_GREEN) || (thisy->actor.params == WOOD_LEAF_YELLOW)) {
+        Gfx_SetupDL_25Opa(play->state.gfxCtx);
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 0, 127);
+        Gfx_DrawDListOpa(play, (Gfx*)object_wood02_DL_000700);
+    } else if (D_80B3BF70[thisy->drawType & 0xF] != NULL) {
+        gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 0, 0);
+        Gfx_DrawDListOpa(play, (Gfx*)gRandoTreeDL);
+        gDPSetEnvColor(POLY_XLU_DISP++, 255, 255, 0, 0);
+        gSPMatrix(POLY_XLU_DISP++, Matrix_NewMtx(play->state.gfxCtx, (char*)__FILE__, __LINE__),
+                  G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPDisplayList(POLY_XLU_DISP++, D_80B3BF70[thisy->drawType & 0xF]);
+    }
     CLOSE_DISPS(play->state.gfxCtx);
 }
 
@@ -38,7 +67,6 @@ uint8_t EnWood02_RandomizerHoldsItem(EnWood02* treeActor, PlayState* play) {
 }
 
 void EnWood02_RandomizerSpawnCollectible(EnWood02* treeActor, PlayState* play) {
-    LUSLOG_DEBUG("Spawning collectible.", gPlayState->sceneNum, SCENE_MARKET_DAY);
     EnItem00* item00 = (EnItem00*)Item_DropCollectible2(play, &treeActor->actor.world.pos, ITEM00_SOH_DUMMY);
     item00->randoInf = treeActor->treeId.randomizerInf;
     item00->itemEntry = Rando::Context::GetInstance()->GetFinalGIEntry(treeActor->treeId.randomizerCheck, true, GI_NONE);
@@ -51,13 +79,15 @@ void EnWood02_RandomizerSpawnCollectible(EnWood02* treeActor, PlayState* play) {
 void EnWood02_RandomizerInit(void* actorRef) {
     Actor* actor = static_cast<Actor*>(actorRef);
 
-    LUSLOG_DEBUG("Scene num: (%d), SCENE_MARKET_DAY = %d", gPlayState->sceneNum, SCENE_MARKET_DAY);
+    LUSLOG_DEBUG("Scene num: (%d)\nMARKET: %d\nHF: %d\nHC: %d", gPlayState->sceneNum, SCENE_MARKET_DAY, SCENE_HYRULE_FIELD, SCENE_HYRULE_CASTLE);
 
     // 0x00 - Large trees
     // 0x01 - Medium trees
     // 0x02 - Small trees
-    if (actor->id != ACTOR_EN_WOOD02 || (gPlayState->sceneNum != SCENE_MARKET_DAY && gPlayState->sceneNum != SCENE_HYRULE_FIELD) || actor->id == ACTOR_EN_WOOD02 && actor->params >= 0x03
-        || gPlayState->sceneNum == SCENE_HYRULE_FIELD && gSaveContext.cutsceneIndex == 0xFFF3)
+    if (actor->id == ACTOR_EN_WOOD02 && actor->params >= 0x01 && gPlayState->sceneNum == SCENE_HYRULE_CASTLE)
+        return;
+    if (actor->id != ACTOR_EN_WOOD02 || (actor->id == ACTOR_EN_WOOD02 && actor->params >= 0x03)
+        || (gPlayState->sceneNum == SCENE_HYRULE_FIELD && gSaveContext.cutsceneIndex == 0xFFF3))
         return;
 
     EnWood02* treeActor = static_cast<EnWood02*>(actorRef);

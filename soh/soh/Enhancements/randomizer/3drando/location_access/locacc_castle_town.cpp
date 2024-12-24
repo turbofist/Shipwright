@@ -96,6 +96,9 @@ void RegionTable_Init_CastleTown() {
                   LOCATION(RC_HC_GS_TREE,                logic->IsChild && logic->CanAttack()),
                   LOCATION(RC_HC_MALON_GOSSIP_STONE,     true),
                   LOCATION(RC_HC_ROCK_WALL_GOSSIP_STONE, true),
+                  LOCATION(RC_HC_SKULLTULA_TREE,         logic->IsChild && logic->CanBonkTrees()),
+                  LOCATION(RC_HC_NEAR_GUARDS_TREE,       logic->IsChild && logic->CanBonkTrees()),
+                  LOCATION(RC_HC_GROTTO_TREE,            logic->IsChild && logic->CanBonkTrees()),
                 }, {
                   //Exits
                   Entrance(RR_CASTLE_GROUNDS,          {[]{return true;}}),

@@ -18,6 +18,7 @@ void RegionTable_Init_HyruleField() {
             LOCATION(RC_HF_NEAR_GV_TREE, logic->CanBonkTrees()),
             LOCATION(RC_HF_NEAR_ZR_TREE, logic->CanBonkTrees()),
             LOCATION(RC_HF_NEAR_KAK_S_TREE, logic->CanBonkTrees()),
+            LOCATION(RC_HF_ADULT_NEAR_GV_TREE, logic->IsAdult && logic->CanBonkTrees()),
                 }, {
                   //Exits
                   Entrance(RR_LW_BRIDGE,              {[]{return true;}}),
@@ -244,6 +245,7 @@ void RegionTable_Init_HyruleField() {
                   LOCATION(RC_LLR_RAIN_SHED_POT_1, logic->IsChild && logic->CanBreakPots()),
                   LOCATION(RC_LLR_RAIN_SHED_POT_2, logic->IsChild && logic->CanBreakPots()),
                   LOCATION(RC_LLR_RAIN_SHED_POT_3, logic->IsChild && logic->CanBreakPots()),
+                  LOCATION(RC_LLR_TREE, logic->IsChild && logic->CanBonkTrees()),
                 }, {
                   //Exits
                   Entrance(RR_HYRULE_FIELD,     {[]{return true;}}),

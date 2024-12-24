@@ -85,6 +85,8 @@ RandomizerArea ItemLocation::GetRandomArea() const {
     if (areas.empty()){
         SPDLOG_DEBUG("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n Attempted to get random area of location with no areas:");
         SPDLOG_DEBUG(Rando::StaticData::GetLocation(rc)->GetName());
+        SPDLOG_DEBUG("RandomizerCheck: {}", rc);
+        SPDLOG_DEBUG("ParentRegion: {}", parentRegion);
         SPDLOG_DEBUG("-------------------------------------------------------: \n\n\n\n\n\n\n\n\n");
         assert(false);
         return RA_NONE;

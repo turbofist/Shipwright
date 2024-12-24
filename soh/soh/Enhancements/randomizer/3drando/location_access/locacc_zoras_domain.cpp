@@ -7,6 +7,7 @@ void RegionTable_Init_ZorasDomain() {
   areaTable[RR_ZR_FRONT] = Region("ZR Front", "Zora River", {RA_ZORAS_RIVER}, DAY_NIGHT_CYCLE, {}, {
                   //Locations
                   LOCATION(RC_ZR_GS_TREE, logic->IsChild && logic->CanAttack()),
+                  LOCATION(RC_ZR_TREE, logic->IsChild && logic->CanBonkTrees()),
                 }, {
                   //Exits
                   Entrance(RR_ZORAS_RIVER,  {[]{return logic->IsAdult || logic->BlastOrSmash();}}),
@@ -176,6 +177,7 @@ void RegionTable_Init_ZorasDomain() {
                   LOCATION(RC_ZF_NEAR_JABU_POT_2,          logic->IsChild && logic->CanBreakPots()),
                   LOCATION(RC_ZF_NEAR_JABU_POT_3,          logic->IsChild && logic->CanBreakPots()),
                   LOCATION(RC_ZF_NEAR_JABU_POT_4,          logic->IsChild && logic->CanBreakPots()),
+                  LOCATION(RC_ZF_TREE, logic->IsChild && logic->CanBonkTrees()),
                 }, {
                   //Exits
                   Entrance(RR_ZD_BEHIND_KING_ZORA,       {[]{return true;}}),
