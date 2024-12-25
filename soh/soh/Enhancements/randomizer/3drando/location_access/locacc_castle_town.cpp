@@ -13,7 +13,7 @@ void RegionTable_Init_CastleTown() {
 
   areaTable[RR_THE_MARKET] = Region("Market", "Market", {RA_THE_MARKET}, NO_DAY_NIGHT_CYCLE, {}, {
                   //Locations
-                  LOCATION(RC_MARKET_TREE, logic->CanBonkTrees())
+                  LOCATION(RC_MARKET_TREE, logic->IsChild && logic->CanBonkTrees())
       }, {
                   //Exits
                   Entrance(RR_MARKET_ENTRANCE,            {[]{return true;}}),

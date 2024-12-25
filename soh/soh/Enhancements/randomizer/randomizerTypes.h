@@ -4645,6 +4645,9 @@ typedef enum {
     // Shuffle Trees
     RHT_TREE_HYRULE_FIELD,
     RHT_TREE_MARKET,
+    RHT_TREE_HYRULE_CASTLE,
+    RHT_TREE_ZORAS_FOUNTAIN,
+    RHT_TREE_ZORAS_RIVER,
     // Ganon Line
     RHT_GANON_JOKE01,
     RHT_GANON_JOKE02,

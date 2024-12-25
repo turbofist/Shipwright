@@ -1610,5 +1610,18 @@ void StaticData::HintTable_Init_Exclude_Overworld() {
         HintText(CustomMessage("They say that a #tree in Hyrule Market# contains #[[1]]#.",
                                /*german*/ "",
                                /*french*/ "", { QM_RED, QM_GREEN }));
+    hintTextTable[RHT_TREE_HYRULE_CASTLE] =
+        HintText(CustomMessage("They say that a #tree in Hyrule Castle# contains #[[1]]#.",
+                               /*german*/ "",
+                               /*french*/ "", { QM_RED, QM_GREEN }));
+    hintTextTable[RHT_TREE_ZORAS_RIVER] =
+        HintText(CustomMessage("They say that a #tree in Zora's River# contains #[[1]]#.",
+                               /*german*/ "",
+                               /*french*/ "", { QM_RED, QM_GREEN }));
+    hintTextTable[RHT_TREE_ZORAS_FOUNTAIN] =
+        HintText(CustomMessage("They say that a #tree in Zora's Fountain# contains #[[1]]#.",
+                               /*german*/ "",
+                               /*french*/ "", { QM_RED, QM_GREEN }));
+
 }
 }

@@ -270,13 +270,13 @@ void Settings::CreateOptionDescriptions() {
                                               "Overworld - Only shuffle pots that are outside of dungeons.\n"
                                               "\n"
                                               "All pots - Shuffle all pots.";
-    mOptionDescriptions[RSK_SHUFFLE_POTS] =
-        "Every tree will be randomized."
+    mOptionDescriptions[RSK_SHUFFLE_TREES] =
+        "Trees will contain randomized items which are dropped the first time the player rolls into one."
         " Trees will have a special appearance when carrying randomized items.\n"
         "\n"
         "Off - Trees will not be shuffled.\n"
         "\n"
-        "On - Shuffle all trees.";
+        "On - Shuffle some trees.";
 
     mOptionDescriptions[RSK_SHUFFLE_FISHING_POLE] = "Shuffles the fishing pole into the item pool.\n"
         "\n"
