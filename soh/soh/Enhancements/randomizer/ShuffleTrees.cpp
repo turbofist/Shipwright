@@ -40,7 +40,7 @@ extern "C" void EnWood02_RandomizerDraw(Actor* thisx, PlayState* play) {
     if ((thisy->actor.params == WOOD_LEAF_GREEN) || (thisy->actor.params == WOOD_LEAF_YELLOW)) {
         Gfx_SetupDL_25Opa(play->state.gfxCtx);
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 0, 127);
-        Gfx_DrawDListOpa(play, (Gfx*)object_wood02_DL_000700);
+        Gfx_DrawDListOpa(play, (Gfx*)gRandoTreeDL);
     } else if (D_80B3BF70[thisy->drawType & 0xF] != NULL) {
         gDPSetPrimColor(POLY_OPA_DISP++, 0, 0, 255, 255, 0, 0);
         Gfx_DrawDListOpa(play, (Gfx*)gRandoTreeDL);
@@ -99,7 +99,7 @@ void ShuffleTrees_OnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, v
     va_list args;
     va_copy(args, originalArgs);
 
-    // Draw custom model for pot to indicate it holding a randomized item.
+    // Hook drawing function, draw randomized tree.
     if (id == VB_TREE_SETUP_DRAW) {
         EnWood02* treeActor = va_arg(args, EnWood02*);
         if (EnWood02_RandomizerHoldsItem(treeActor, gPlayState)) {
@@ -108,7 +108,7 @@ void ShuffleTrees_OnVanillaBehaviorHandler(GIVanillaBehavior id, bool* should, v
         }
     }
 
-    // Do not spawn vanilla item from pot, instead spawn the randomized item.
+    // Hook dropping function, spawn randomized item.
     if (id == VB_TREE_DROP_ITEM) {
         EnWood02* treeActor = va_arg(args, EnWood02*);
         if (EnWood02_RandomizerHoldsItem(treeActor, gPlayState)) {
