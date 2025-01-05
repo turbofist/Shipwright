@@ -359,26 +359,23 @@ void EnWood02_Update(Actor* thisx, PlayState* play2) {
             dropsSpawnPt = this->actor.world.pos;
             dropsSpawnPt.y += 200.0f;
 
-            if ((this->unk_14C >= 0) && (this->unk_14C < 0x64) && (CVarGetInteger(CVAR_ENHANCEMENT("TreesDropSticks"), 0)) && !(INV_CONTENT(ITEM_STICK) == ITEM_NONE)) {
-                (numDrops = (Rand_ZeroOne() * 4));
-                for (i = 0; i < numDrops; ++i) {
-                    LUSLOG_DEBUG("Tree bonked 1");
-                    Item_DropCollectible(play, &dropsSpawnPt, ITEM00_STICK);
-                }
-            } else {
-                LUSLOG_DEBUG("Tree bonked 2");
-                if (GameInteractor_Should(VB_TREE_DROP_ITEM, (this->unk_14C >= 0) && (this->unk_14C < 0x64), this)) {
-                    Item_DropCollectibleRandom(play, &this->actor, &dropsSpawnPt, this->unk_14C << 4);
-            } else {
-                LUSLOG_DEBUG("Tree bonked 3");
-                if (this->actor.home.rot.z != 0) {
-                    this->actor.home.rot.z &= 0x1FFF;
-                    this->actor.home.rot.z |= 0xE000;
-                    Actor_Spawn(&play->actorCtx, play, ACTOR_EN_SW, dropsSpawnPt.x, dropsSpawnPt.y,
-                                dropsSpawnPt.z, 0, this->actor.world.rot.y, 0, this->actor.home.rot.z, true);
-                    this->actor.home.rot.z = 0;
+            if ((this->unk_14C >= 0) && (this->unk_14C < 0x64)) { 
+                if (CVarGetInteger(CVAR_ENHANCEMENT("TreesDropSticks"), 0) && INV_CONTENT(ITEM_STICK) != ITEM_NONE) {
+                    numDrops = Rand_ZeroOne() * 4;
+                    for (i = 0; i < numDrops; ++i) {
+                        Item_DropCollectible(play, &dropsSpawnPt, ITEM00_STICK);
+                    }
+                } else {
+                    if (GameInteractor_Should(VB_TREE_DROP_ITEM, true, this)) {
+                        Item_DropCollectibleRandom(play, &this->actor, &dropsSpawnPt, this->unk_14C << 4);
                     }
                 }
+            } else if (this->actor.home.rot.z != 0) {
+                this->actor.home.rot.z &= 0x1FFF;
+                this->actor.home.rot.z |= 0xE000;
+                Actor_Spawn(&play->actorCtx, play, ACTOR_EN_SW, dropsSpawnPt.x, dropsSpawnPt.y,
+                            dropsSpawnPt.z, 0, this->actor.world.rot.y, 0, this->actor.home.rot.z, true);
+                this->actor.home.rot.z = 0;
             }
 
             // Spawn falling leaves
