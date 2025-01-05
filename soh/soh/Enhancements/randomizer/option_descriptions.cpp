@@ -271,8 +271,9 @@ void Settings::CreateOptionDescriptions() {
                                               "\n"
                                               "All pots - Shuffle all pots.";
     mOptionDescriptions[RSK_SHUFFLE_TREES] =
-        "Trees will contain randomized items which are dropped the first time the player rolls into one."
-        " Trees will have a special appearance when carrying randomized items.\n"
+        "Trees will contain randomized items which are dropped the first time the player rolls into one.\n"
+        "Trees will have a special appearance when carrying randomized items.\n"
+        "\nThe tree in Hyrule Market has both a day and night version.\n"
         "\n"
         "Off - Trees will not be shuffled.\n"
         "\n"

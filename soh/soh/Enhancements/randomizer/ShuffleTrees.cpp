@@ -79,7 +79,7 @@ void EnWood02_RandomizerSpawnCollectible(EnWood02* treeActor, PlayState* play) {
 void EnWood02_RandomizerInit(void* actorRef) {
     Actor* actor = static_cast<Actor*>(actorRef);
 
-    LUSLOG_DEBUG("Scene num: (%d)\nMARKET: %d\nHF: %d\nHC: %d", gPlayState->sceneNum, SCENE_MARKET_DAY, SCENE_HYRULE_FIELD, SCENE_HYRULE_CASTLE);
+    //LUSLOG_DEBUG("Scene num: (%d)\nMARKET: %d\nHF: %d\nHC: %d", gPlayState->sceneNum, SCENE_MARKET_DAY, SCENE_HYRULE_FIELD, SCENE_HYRULE_CASTLE);
 
     // 0x00 - Large trees
     // 0x01 - Medium trees

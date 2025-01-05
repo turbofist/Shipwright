@@ -859,16 +859,10 @@ void GenerateItemPool() {
     PlaceItemsForType(RCTYPE_POT, overworldPotsActive, dungeonPotsActive, false);
   }
 
-  // Shuffle Trees
-  if (ctx->GetOption(RSK_SHUFFLE_TREES).IsNot(RO_SHUFFLE_TREES_OFF)) {
-      bool treesActive = ctx->GetOption(RSK_SHUFFLE_TREES).Is(RO_SHUFFLE_TREES_ON);
-
-      for (RandomizerCheck loc : ctx->GetLocations(ctx->allLocations, RCTYPE_POT)) {
-          // If pot is in the overworld and shuffled, add its item to the pool
-          if (treesActive) {
-              AddItemToMainPool(Rando::StaticData::GetLocation(loc)->GetVanillaItem());
-          }
-      }
+  // Shuffle Trees (Add more options for tree categories).
+  bool treesActive = ctx->GetOption(RSK_SHUFFLE_TREES).Is(RO_SHUFFLE_TREES_ON);
+  if (treesActive) {
+      PlaceItemsForType(RCTYPE_TREE, treesActive, false, false);
   }
   
   auto fsMode = ctx->GetOption(RSK_FISHSANITY);
