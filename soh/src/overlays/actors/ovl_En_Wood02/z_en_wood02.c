@@ -361,6 +361,7 @@ void EnWood02_Update(Actor* thisx, PlayState* play2) {
 
             if ((this->unk_14C >= 0) && (this->unk_14C < 0x64)) { 
                 if (CVarGetInteger(CVAR_ENHANCEMENT("TreesDropSticks"), 0) && INV_CONTENT(ITEM_STICK) != ITEM_NONE) {
+                    if (GameInteractor_Should(VB_TREE_DROP_ITEM, true, this)) {}
                     numDrops = Rand_ZeroOne() * 4;
                     for (i = 0; i < numDrops; ++i) {
                         Item_DropCollectible(play, &dropsSpawnPt, ITEM00_STICK);
@@ -390,10 +391,11 @@ void EnWood02_Update(Actor* thisx, PlayState* play2) {
                     leavesParams = WOOD_LEAF_YELLOW;
                 }
                 Audio_PlayActorSound2(&this->actor, NA_SE_EV_TREE_SWING);
-
-                for (i = 3; i >= 0; i--) {
-                    Actor_Spawn(&play->actorCtx, play, ACTOR_EN_WOOD02, dropsSpawnPt.x, dropsSpawnPt.y,
-                                dropsSpawnPt.z, 0, Rand_CenteredFloat(65535.0f), 0, leavesParams, true);
+                if (GameInteractor_Should(VB_TREE_DROP_ITEM, true, this)) {
+                    for (i = 3; i >= 0; i--) {
+                        Actor_Spawn(&play->actorCtx, play, ACTOR_EN_WOOD02, dropsSpawnPt.x, dropsSpawnPt.y,
+                                    dropsSpawnPt.z, 0, Rand_CenteredFloat(65535.0f), 0, leavesParams, true);
+                    }
                 }
             }
             this->unk_14C = -0x15;

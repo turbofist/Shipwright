@@ -81,14 +81,19 @@ void EnWood02_RandomizerInit(void* actorRef) {
 
     //LUSLOG_DEBUG("Scene num: (%d)\nMARKET: %d\nHF: %d\nHC: %d", gPlayState->sceneNum, SCENE_MARKET_DAY, SCENE_HYRULE_FIELD, SCENE_HYRULE_CASTLE);
 
+    LUSLOG_DEBUG("Scene: %d actorId: %d actorParams: %x", gPlayState->sceneNum, actor->id, actor->params);
+    LUSLOG_DEBUG("Market: Day: %d Night: %d", SCENE_MARKET_DAY, SCENE_MARKET_NIGHT);
     // 0x00 - Large trees
     // 0x01 - Medium trees
     // 0x02 - Small trees
     if (actor->id == ACTOR_EN_WOOD02 && actor->params >= 0x01 && gPlayState->sceneNum == SCENE_HYRULE_CASTLE)
         return;
-    if (actor->id != ACTOR_EN_WOOD02 || (actor->id == ACTOR_EN_WOOD02 && actor->params >= 0x03)
-        || (gPlayState->sceneNum == SCENE_HYRULE_FIELD && gSaveContext.cutsceneIndex == 0xFFF3))
+    if (actor->id != ACTOR_EN_WOOD02 || (gPlayState->sceneNum == SCENE_HYRULE_FIELD && gSaveContext.cutsceneIndex == 0xFFF3))
         return;
+    if (actor->id == ACTOR_EN_WOOD02 && ((actor->params >= WOOD_BUSH_GREEN_SMALL) || (actor->params == WOOD_TREE_OVAL_GREEN_SPAWNED || actor->params == WOOD_TREE_OVAL_YELLOW_SPAWNED || actor->params == WOOD_TREE_CONICAL_SPAWNED)))
+        return;
+
+    LUSLOG_DEBUG("Passed!");
 
     EnWood02* treeActor = static_cast<EnWood02*>(actorRef);
 

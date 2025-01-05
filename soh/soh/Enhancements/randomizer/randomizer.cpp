@@ -1562,6 +1562,19 @@ std::map<RandomizerCheck, RandomizerInf> rcToRandomizerInf = {
     { RC_MARKET_DAY_TREE,                                               RAND_INF_MARKET_DAY_TREE },
     { RC_MARKET_NIGHT_TREE,                                             RAND_INF_MARKET_NIGHT_TREE },
     //CUSTOM ADD HERE
+    { RC_HF_EAST_TREE_1, RAND_INF_HF_EAST_TREE_1 },
+    { RC_HF_SOUTH_TREE_1, RAND_INF_HF_SOUTH_TREE_1 },
+    { RC_HF_NORTHWEST_TREE_2, RAND_INF_HF_NORTHWEST_TREE_2 },
+    { RC_HF_SOUTHEAST_TREE_4, RAND_INF_HF_SOUTHEAST_TREE_4 },
+    { RC_HF_NORTHWEST_TREE_1, RAND_INF_HF_NORTHWEST_TREE_1 },
+    { RC_HF_EAST_TREE_1, RAND_INF_HF_EAST_TREE_1 },
+    { RC_HF_SOUTHEAST_TREE_3, RAND_INF_HF_SOUTHEAST_TREE_3 },
+    { RC_HF_SOUTHEAST_TREE_2, RAND_INF_HF_SOUTHEAST_TREE_2 },
+    { RC_HF_NEAR_HC_GROTTO_TREE_3, RAND_INF_HF_NEAR_HC_GROTTO_TREE_3 },
+    { RC_HF_SOUTHEAST_TREE_1, RAND_INF_HF_SOUTHEAST_TREE_1 },
+    { RC_TREE_HF_YELLOW_GROTTO_TREE, RAND_INF_TREE_HF_YELLOW_GROTTO_TREE },
+    { RC_HF_TREE_NEAR_HC_GROTTO_2, RAND_INF_HF_TREE_NEAR_HC_GROTTO_2 },
+    { RC_HF_TREE_NEAR_HC_GROTTO_1, RAND_INF_HF_TREE_NEAR_HC_GROTTO_1 },
     { RC_ZF_TREE, RAND_INF_ZF_TREE },
     { RC_ZR_TREE, RAND_INF_ZR_TREE },
     { RC_KAK_TREE, RAND_INF_KAK_TREE },
@@ -1842,9 +1855,6 @@ TreeIdentity Randomizer::IdentifyTree(s32 sceneNum, s32 posX, s32 posZ) {
     struct TreeIdentity treeIdentity;
     uint32_t treeSceneNum = sceneNum;
 
-    LUSLOG_DEBUG("Rando location: (%d)", );
-
-
     treeIdentity.randomizerInf = RAND_INF_MAX;
     treeIdentity.randomizerCheck = RC_UNKNOWN_CHECK;
 
@@ -1852,7 +1862,7 @@ TreeIdentity Randomizer::IdentifyTree(s32 sceneNum, s32 posX, s32 posZ) {
 
     Rando::Location* location = GetCheckObjectFromActor(ACTOR_EN_WOOD02, treeSceneNum, actorParams);
 
-    LUSLOG_DEBUG("Rando location: (%d)", location->GetRandomizerCheck());
+    LUSLOG_DEBUG("Rando location: (%d) X: %d Y: %d", location->GetRandomizerCheck(), posX, posZ);
 
     if (location->GetRandomizerCheck() == RC_UNKNOWN_CHECK) {
         LUSLOG_DEBUG("Tree fitting criteria at X: %d Z: %d", posX, posZ);
