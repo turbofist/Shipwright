@@ -60,6 +60,7 @@ bool showOverworldPots;
 bool showDungeonPots;
 bool showTrees;
 bool showFrogSongRupees;
+bool showFairies;
 bool showStartingMapsCompasses;
 bool showKeysanity;
 bool showGerudoFortressKeys;
@@ -1165,6 +1166,9 @@ void LoadSettings() {
     showFrogSongRupees = IS_RANDO ?
         OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_FROG_SONG_RUPEES) == RO_GENERIC_YES
         : false;
+    showFairies = IS_RANDO ?
+        OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_FAIRIES) == RO_GENERIC_YES
+        : false;
     showStartingMapsCompasses = IS_RANDO ?
         OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_MAPANDCOMPASS) != RO_DUNGEON_ITEM_LOC_VANILLA
         : false;
@@ -1268,15 +1272,15 @@ void LoadSettings() {
 
     if (IS_RANDO) {
         switch (OTRGlobals::Instance->gRandomizer->GetRandoSettingValue(RSK_SHUFFLE_FREESTANDING)) {
-            case RO_FREESTANDING_ALL:
+            case RO_SHUFFLE_FREESTANDING_ALL:
                 showOverworldFreestanding = true;
                 showDungeonFreestanding = true;
                 break;
-            case RO_FREESTANDING_OVERWORLD:
+            case RO_SHUFFLE_FREESTANDING_OVERWORLD:
                 showOverworldFreestanding = true;
                 showDungeonFreestanding = false;
                 break;
-            case RO_FREESTANDING_DUNGEONS:
+            case RO_SHUFFLE_FREESTANDING_DUNGEONS:
                 showOverworldFreestanding = false;
                 showDungeonFreestanding = true;
                 break;
@@ -1347,6 +1351,7 @@ bool IsCheckShuffled(RandomizerCheck rc) {
             (rc != RC_HC_MALON_EGG || showWeirdEgg) &&
             (loc->GetRCType() != RCTYPE_FROG_SONG || showFrogSongRupees) &&
             ((loc->GetRCType() != RCTYPE_MAP && loc->GetRCType() != RCTYPE_COMPASS) || showStartingMapsCompasses) &&
+            (loc->GetRCType() != RCTYPE_FAIRY || showFairies) &&
             (loc->GetRCType() != RCTYPE_SMALL_KEY || showKeysanity) &&
             (loc->GetRCType() != RCTYPE_BOSS_KEY || showBossKeysanity) &&
             (loc->GetRCType() != RCTYPE_GANON_BOSS_KEY || showGanonBossKey) &&
