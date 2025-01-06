@@ -274,6 +274,7 @@ void Settings::CreateOptionDescriptions() {
         "Trees will contain randomized items which are dropped the first time the player rolls into one.\n"
         "Trees will have a special appearance when carrying randomized items.\n"
         "\nThe tree in Hyrule Market has both a day and night version.\n"
+        "\nSome trees are dependant on Link's age, such as some trees in Hyrule Field.\n"
         "\n"
         "Off - Trees will not be shuffled.\n"
         "\n"
