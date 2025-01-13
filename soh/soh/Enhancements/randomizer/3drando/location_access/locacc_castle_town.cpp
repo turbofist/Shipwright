@@ -112,6 +112,11 @@ void RegionTable_Init_CastleTown() {
                   LOCATION(RC_HC_GROTTO_TREE,                      logic->IsChild && logic->CanBonkTrees()),
                   LOCATION(RC_HC_SKULLTULA_TREE,                   logic->IsChild && logic->CanBonkTrees()),
                   LOCATION(RC_HC_NEAR_GUARDS_TREE,                 logic->IsChild && logic->CanBonkTrees()),
+                  LOCATION(RC_HC_NEAR_GUARDS_TREE_1,               logic->IsChild && logic->CanBonkTrees()),
+                  LOCATION(RC_HC_NEAR_GUARDS_TREE_2,               logic->IsChild && logic->CanBonkTrees()),
+                  LOCATION(RC_HC_NEAR_GUARDS_TREE_3,               logic->IsChild && logic->CanBonkTrees()),
+                  LOCATION(RC_HC_NEAR_GUARDS_TREE_4,               logic->IsChild && logic->CanBonkTrees()),
+                  LOCATION(RC_HC_NEAR_GUARDS_TREE_5,               logic->IsChild && logic->CanBonkTrees()),
                 }, {
                   //Exits
                   Entrance(RR_CASTLE_GROUNDS,          {[]{return true;}}),
